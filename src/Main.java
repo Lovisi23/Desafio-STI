@@ -1,5 +1,5 @@
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -9,22 +9,20 @@ public class Main {
 
         LeitorCSV leitor = new LeitorCSV(Paths.get("alunos.csv"));
 
-        List<Aluno> listaDeAlunos = leitor.learquivo();
+        Map<String, Aluno> mapaDeAlunos = leitor.learquivo();
 
         System.out.print("Digite sua matricula: ");
         String mat = sc.nextLine();
 
-        boolean achoumat = false;
+        Aluno a = mapaDeAlunos.get(mat);
 
-        for (Aluno a : listaDeAlunos) {
-            if (a.getMatricula().equals(mat)) {
-                achoumat = true;
-                GerenciadorUFFmail.criaUFFmail(a, mat);
-                break;
-            }
+        if (a != null) {
+
+            GerenciadorUFFmail.criaUFFmail(a, mat, sc);
+        } else {
+
+            System.out.println("Matricula não encontrada");
         }
 
-        if(!achoumat)
-            System.out.println("Matricula não encontrada");
     }
 }

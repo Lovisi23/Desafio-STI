@@ -3,9 +3,8 @@ public class GerenciadorUFFmail
 
 {
 
-    public static void criaUFFmail(Aluno a, String mat)
+    public static void criaUFFmail(Aluno a, String mat, Scanner sc)
     {
-        Scanner sc = new Scanner(System.in);
 
         if(!a.getStatus().equalsIgnoreCase("ativo"))
 
@@ -25,7 +24,7 @@ public class GerenciadorUFFmail
                 String[] partes = nomeCompleto.split(" ");
                 String fn = partes[0].toLowerCase();                      // Primeiro nome
                 String mn = (partes.length > 2) ? partes[1].toLowerCase() : ""; // Nome do meio
-                String ls = partes[partes.length - 1].toLowerCase();      // Último nome
+                String ls = (partes.length > 1) ? partes[partes.length - 1].toLowerCase() : "";      // Último nome
 
                 String op1 = fn + (mn.isEmpty() ? "" : "_" + mn) +"@id.uff.br";
                 String op2 = fn + (mn.isEmpty() ? "" : mn.charAt(0)) + ls.charAt(0) + "@id.uff.br";
@@ -39,38 +38,31 @@ public class GerenciadorUFFmail
                         "2 - " + op2 + "\n" +
                         "3 - " + op3 + "\n" +
                         "4 - " + op4 + "\n" +
-                        "5 - " + op5);
+                        "5 - " + op5 + "\n");
 
-                System.out.println();
-                int op = sc.nextInt();
+                int op = 0;
+                op = sc.nextInt();
+
+                if (op < 1 || op > 5)
+                    do {
+                        System.out.print("\nOpção invalida, escolha uma opção valida: ");
+                        op = sc.nextInt();
+                    }while (op < 1 || op > 5);
+
+                String email_es = "";
 
                 switch (op){
 
-                    case 1:
-                        System.out.println("A criação de seu e-mail " + "(" + op1 + ") será feita nos próximos minutos.\n" +
-                                "Um SMS foi enviado para " + a.getTelefone() + " com a sua senha de acesso.");
-                        break;
-
-                    case 2:
-                        System.out.println("A criação de seu e-mail " + "(" + op2 + ") será feita nos próximos minutos.\n" +
-                                "Um SMS foi enviado para " + a.getTelefone() + " com a sua senha de acesso.");
-                        break;
-                    case 3:
-                        System.out.println("A criação de seu e-mail " + "(" + op3 + ") será feita nos próximos minutos.\n" +
-                                "Um SMS foi enviado para " + a.getTelefone() + " com a sua senha de acesso.");
-                        break;
-                    case 4:
-                        System.out.println("A criação de seu e-mail " + "(" + op4 + ") será feita nos próximos minutos.\n" +
-                                "Um SMS foi enviado para " + a.getTelefone() + " com a sua senha de acesso.");
-                        break;
-                    case 5:
-                        System.out.println("A criação de seu e-mail " + "(" + op5 + ") será feita nos próximos minutos.\n" +
-                                "Um SMS foi enviado para " + a.getTelefone() + " com a sua senha de acesso.");
-                        break;
-
-                    default: System.out.println("Opção invalida");
+                    case 1: email_es = op1;break;
+                    case 2: email_es = op2;break;
+                    case 3: email_es = op3;break;
+                    case 4: email_es = op4;break;
+                    case 5: email_es = op5;break;
 
                 }
+
+                System.out.println("\nA criação de seu e-mail " + "(" + email_es + ") será feita nos próximos minutos.\n" +
+                        "Um SMS foi enviado para " + a.getTelefone() + " com a sua senha de acesso.");
             }
         }
     }

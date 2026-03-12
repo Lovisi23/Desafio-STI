@@ -1,7 +1,7 @@
 import java.io.*;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LeitorCSV
 
@@ -12,8 +12,8 @@ public class LeitorCSV
         this.caminho = caminho;
     }
 
-    public List<Aluno> learquivo(){
-        List<Aluno> alunos = new ArrayList<>();
+    public Map<String,Aluno> learquivo(){
+        Map<String,Aluno> alunos = new HashMap<>();
 
         try(BufferedReader br = new BufferedReader(new FileReader(caminho.toFile()))) {
 
@@ -30,7 +30,7 @@ public class LeitorCSV
                 String status = v[5];
 
                 Aluno a = new Aluno(nome,matricula,telefone,email,uffmail,status);
-                alunos.add(a);
+                alunos.put(a.getMatricula(),a);
 
                 line = br.readLine();
             }
