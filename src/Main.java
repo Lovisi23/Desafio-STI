@@ -17,7 +17,6 @@ public class Main {
         Aluno a = mapaDeAlunos.get(mat);
 
         if (a != null) {
-
             GerenciadorUFFmail.criaUFFmail(a, mat, sc);
         } else {
 
